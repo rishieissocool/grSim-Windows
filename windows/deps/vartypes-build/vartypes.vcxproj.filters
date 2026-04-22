@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-build\vartypes_autogen\mocs_compilation_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\VarBase64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\VarNotifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\VarTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\VarXML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\VarTypesInstance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\VarTypesFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\xml\xmlParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarStringVal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarBoolVal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarVal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarIntVal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarDoubleVal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarBlob.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarBool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarDouble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarExternal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarQWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarSelection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarStringEnum.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\gui\VarItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\gui\VarItemDelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\gui\VarTreeModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\gui\VarTreeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\gui\VarTreeViewOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarProtoBufferVal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\primitives\VarProtoBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-build\qrc_icons.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-build\vartypes_autogen\mocs_compilation_Release.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-build\vartypes_autogen\mocs_compilation_MinSizeRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\grSim-master\windows\deps\vartypes-build\vartypes_autogen\mocs_compilation_RelWithDebInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\grSim-master\windows\deps\vartypes-src\vartypes\gui\icons\icons.qrc" />
+    <CustomBuild Include="D:\grSim-master\windows\deps\vartypes-src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{216499FB-7F75-387E-8465-CE749B61E26E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/grSim-master/windows/deps/vartypes-build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

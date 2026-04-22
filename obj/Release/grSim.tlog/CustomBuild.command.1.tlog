@@ -1,0 +1,66 @@
+^D:\GRSIM-MASTER\INCLUDE\MAINWINDOW.H
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\qt5\bin\moc.exe" "D:\grSim-master\include\mainwindow.h" -o "grSim\x64\Release\generated\moc_mainwindow.cpp" -I"D:\grSim-master\windows\..\include" -I"D:\grSim-master\windows\..\include\net" -I"D:\grSim-master\windows\..\include\physics" -I"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC
+^D:\GRSIM-MASTER\INCLUDE\GLWIDGET.H
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\qt5\bin\moc.exe" "D:\grSim-master\include\glwidget.h" -o "grSim\x64\Release\generated\moc_glwidget.cpp" -I"D:\grSim-master\windows\..\include" -I"D:\grSim-master\windows\..\include\net" -I"D:\grSim-master\windows\..\include\physics" -I"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC
+^D:\GRSIM-MASTER\INCLUDE\CONFIGWIDGET.H
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\qt5\bin\moc.exe" "D:\grSim-master\include\configwidget.h" -o "grSim\x64\Release\generated\moc_configwidget.cpp" -I"D:\grSim-master\windows\..\include" -I"D:\grSim-master\windows\..\include\net" -I"D:\grSim-master\windows\..\include\physics" -I"D:\grSim-master\windows\deps\vartypes-install\include" -I"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC
+^D:\GRSIM-MASTER\INCLUDE\STATUSWIDGET.H
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\qt5\bin\moc.exe" "D:\grSim-master\include\statuswidget.h" -o "grSim\x64\Release\generated\moc_statuswidget.cpp" -I"D:\grSim-master\windows\..\include" -I"D:\grSim-master\windows\..\include\net" -I"D:\grSim-master\windows\..\include\physics" -I"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC
+^D:\GRSIM-MASTER\INCLUDE\ROBOTWIDGET.H
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\qt5\bin\moc.exe" "D:\grSim-master\include\robotwidget.h" -o "grSim\x64\Release\generated\moc_robotwidget.cpp" -I"D:\grSim-master\windows\..\include" -I"D:\grSim-master\windows\..\include\net" -I"D:\grSim-master\windows\..\include\physics" -I"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC
+^D:\GRSIM-MASTER\INCLUDE\GETPOSITIONWIDGET.H
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\qt5\bin\moc.exe" "D:\grSim-master\include\getpositionwidget.h" -o "grSim\x64\Release\generated\moc_getpositionwidget.cpp" -I"D:\grSim-master\windows\..\include" -I"D:\grSim-master\windows\..\include\net" -I"D:\grSim-master\windows\..\include\physics" -I"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC
+^D:\GRSIM-MASTER\INCLUDE\SSLWORLD.H
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\qt5\bin\moc.exe" "D:\grSim-master\include\sslworld.h" -o "grSim\x64\Release\generated\moc_sslworld.cpp" -I"D:\grSim-master\windows\..\include" -I"D:\grSim-master\windows\..\include\net" -I"D:\grSim-master\windows\..\include\physics" -I"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC
+^D:\GRSIM-MASTER\RESOURCES\TEXTURES.QRC
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\qt5\bin\rcc.exe" -name textures "D:\grSim-master\resources\textures.qrc" -o "grSim\x64\Release\generated\qrc_textures.cpp"
+^D:\GRSIM-MASTER\SRC\PROTO\GRSIM_COMMANDS.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\grSim_Commands.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\GRSIM_PACKET.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\grSim_Packet.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\GRSIM_REPLACEMENT.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\grSim_Replacement.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\GRSIM_ROBOTSTATUS.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\grSim_Robotstatus.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_GC_COMMON.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_gc_common.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_SIMULATION_CONFIG.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_simulation_config.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_SIMULATION_CONTROL.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_simulation_control.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_SIMULATION_ERROR.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_simulation_error.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_SIMULATION_ROBOT_CONTROL.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_simulation_robot_control.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_SIMULATION_ROBOT_FEEDBACK.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_simulation_robot_feedback.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_SIMULATION_SYNCHRONOUS.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_simulation_synchronous.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_VISION_DETECTION.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_vision_detection.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_VISION_GEOMETRY.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_vision_geometry.proto"
+^D:\GRSIM-MASTER\SRC\PROTO\SSL_VISION_WRAPPER.PROTO
+if not exist "grSim\x64\Release\generated\" mkdir "grSim\x64\Release\generated\"
+"C:\Users\wenoiudehciur3hvfi42\vcpkg\installed\x64-windows\tools\protobuf\protoc.exe" --cpp_out="grSim\x64\Release\generated\." --proto_path="D:\grSim-master\src\proto\." "D:\grSim-master\src\proto\ssl_vision_wrapper.proto"

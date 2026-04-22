@@ -1,0 +1,11 @@
+.DS_STORE
+build*/*
+dist/*
+bin*/*
+*.user
+*.swp
+Thumbs.db
+.idea/*
+*.iml
+cmake-build-debug
+cmake-build-release

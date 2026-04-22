@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- ================================================================ -->
+  <!--  grSim — hand-written Visual Studio 2022 project (x64).          -->
+  <!--  Source/headers live in ..\src and ..\include (unchanged).       -->
+  <!--  Qt moc, Qt rcc and protoc are invoked via <CustomBuild> steps.  -->
+  <!--                                                                  -->
+  <!--  Before first build, run: windows\fetch-deps.bat                 -->
+  <!--  It installs Qt5/ODE/Protobuf via vcpkg and builds VarTypes.     -->
+  <!-- ================================================================ -->
+
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{A7C3E4B1-2D5F-4A6B-9E8C-1F3B4D5A6E7C}</ProjectGuid>
+    <RootNamespace>grSim</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+
+  <!-- ================================================================ -->
+  <!--  External dependency roots                                       -->
+  <!-- ================================================================ -->
+  <PropertyGroup>
+    <VcpkgRoot Condition="'$(VcpkgRoot)'=='' and '$(VCPKG_ROOT)'!=''">$(VCPKG_ROOT)</VcpkgRoot>
+    <VcpkgRoot Condition="'$(VcpkgRoot)'=='' and '$(USERPROFILE)'!=''">$(USERPROFILE)\vcpkg</VcpkgRoot>
+    <VcpkgInstalled>$(VcpkgRoot)\installed\x64-windows</VcpkgInstalled>
+    <VcpkgApplocalDeps>false</VcpkgApplocalDeps>
+    <VarTypesRoot>$(MSBuildThisFileDirectory)deps\vartypes-install</VarTypesRoot>
+    <MocExe>$(VcpkgInstalled)\tools\qt5\bin\moc.exe</MocExe>
+    <RccExe>$(VcpkgInstalled)\tools\qt5\bin\rcc.exe</RccExe>
+    <ProtocExe>$(VcpkgInstalled)\tools\protobuf\protoc.exe</ProtocExe>
+    <GeneratedDir>$(IntDir)generated\</GeneratedDir>
+  </PropertyGroup>
+
+  <!-- Fail early with actionable dependency errors before CustomBuild runs. -->
+  <Target Name="ValidateDependencyTools" BeforeTargets="CustomBuild;ClCompile">
+    <Error Condition="'$(VcpkgRoot)'==''"
+           Text="VCPKG_ROOT is not set and fallback path could not be resolved. Run windows\fetch-deps.bat, then reopen Visual Studio." />
+    <Error Condition="!Exists('$(MocExe)')"
+           Text="Qt moc.exe not found at '$(MocExe)'. Run windows\fetch-deps.bat, then reopen Visual Studio." />
+    <Error Condition="!Exists('$(RccExe)')"
+           Text="Qt rcc.exe not found at '$(RccExe)'. Run windows\fetch-deps.bat, then reopen Visual Studio." />
+    <Error Condition="!Exists('$(ProtocExe)')"
+           Text="protoc.exe not found at '$(ProtocExe)'. Run windows\fetch-deps.bat, then reopen Visual Studio." />
+    <Error Condition="!Exists('$(VarTypesRoot)\include\vartypes\VarTypes.h')"
+           Text="VarTypes headers not found at '$(VarTypesRoot)'. Run windows\fetch-deps.bat to build/install VarTypes." />
+  </Target>
+
+  <!-- Output paths: exe goes to <repo>\bin\grSim.exe (matches Linux build) -->
+  <PropertyGroup>
+    <OutDir>$(MSBuildThisFileDirectory)..\bin\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)..\obj\$(Configuration)\</IntDir>
+    <TargetName>grSim</TargetName>
+  </PropertyGroup>
+
+  <!-- ================================================================ -->
+  <!--  Compile / link options                                          -->
+  <!-- ================================================================ -->
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>false</SDLCheck>
+      <ConformanceMode>false</ConformanceMode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>
+        $(MSBuildThisFileDirectory)..\include;
+        $(MSBuildThisFileDirectory)..\include\net;
+        $(MSBuildThisFileDirectory)..\include\physics;
+        $(GeneratedDir);
+        $(VcpkgInstalled)\include;
+        $(VcpkgInstalled)\include\Qt5;
+        $(VcpkgInstalled)\include\Qt5\QtCore;
+        $(VcpkgInstalled)\include\Qt5\QtGui;
+        $(VcpkgInstalled)\include\Qt5\QtWidgets;
+        $(VcpkgInstalled)\include\Qt5\QtOpenGL;
+        $(VcpkgInstalled)\include\Qt5\QtNetwork;
+        $(VarTypesRoot)\include;
+        %(AdditionalIncludeDirectories)
+      </AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>
+        HAVE_WINDOWS;HAVE_MSVC;_USE_MATH_DEFINES;NOMINMAX;WIN32_LEAN_AND_MEAN;
+        QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB;QT_OPENGL_LIB;QT_NETWORK_LIB;
+        _CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <DisableSpecificWarnings>4244;4267;4305;4819;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>
+        opengl32.lib;glu32.lib;ws2_32.lib;user32.lib;gdi32.lib;shell32.lib;ole32.lib;advapi32.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)..\resources;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+
+  <!-- Release-specific -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>
+        $(VcpkgInstalled)\lib;$(VarTypesRoot)\lib;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+        Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;Qt5OpenGL.lib;Qt5Network.lib;
+        ode_double.lib;libprotobuf.lib;vartypes.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- Debug-specific -->
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>_DEBUG;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>
+        $(VcpkgInstalled)\debug\lib;$(VarTypesRoot)\debug\lib;%(AdditionalLibraryDirectories)
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>
+        Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;Qt5OpenGLd.lib;Qt5Networkd.lib;
+        ode_doubled.lib;libprotobufd.lib;vartypes.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+
+  <!-- ================================================================ -->
+  <!--  Source files                                                    -->
+  <!-- ================================================================ -->
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\mainwindow.cpp" />
+    <ClCompile Include="..\src\glwidget.cpp" />
+    <ClCompile Include="..\src\graphics.cpp" />
+    <ClCompile Include="..\src\sslworld.cpp" />
+    <ClCompile Include="..\src\robot.cpp" />
+    <ClCompile Include="..\src\configwidget.cpp" />
+    <ClCompile Include="..\src\statuswidget.cpp" />
+    <ClCompile Include="..\src\logger.cpp" />
+    <ClCompile Include="..\src\robotwidget.cpp" />
+    <ClCompile Include="..\src\getpositionwidget.cpp" />
+    <ClCompile Include="..\src\physics\pworld.cpp" />
+    <ClCompile Include="..\src\physics\pobject.cpp" />
+    <ClCompile Include="..\src\physics\pball.cpp" />
+    <ClCompile Include="..\src\physics\pground.cpp" />
+    <ClCompile Include="..\src\physics\pfixedbox.cpp" />
+    <ClCompile Include="..\src\physics\pcylinder.cpp" />
+    <ClCompile Include="..\src\physics\pbox.cpp" />
+    <ClCompile Include="..\src\physics\pray.cpp" />
+    <ClCompile Include="..\src\net\robocup_ssl_server.cpp" />
+    <ClCompile Include="..\src\net\robocup_ssl_client.cpp" />
+  </ItemGroup>
+
+  <!-- ================================================================ -->
+  <!--  Headers (plain) + Q_OBJECT headers that need moc                -->
+  <!-- ================================================================ -->
+  <ItemGroup>
+    <ClInclude Include="..\include\common.h" />
+    <ClInclude Include="..\include\config.h" />
+    <ClInclude Include="..\include\graphics.h" />
+    <ClInclude Include="..\include\robot.h" />
+    <ClInclude Include="..\include\logger.h" />
+    <ClInclude Include="..\include\net\robocup_ssl_client.h" />
+    <ClInclude Include="..\include\net\robocup_ssl_server.h" />
+    <ClInclude Include="..\include\physics\pball.h" />
+    <ClInclude Include="..\include\physics\pbox.h" />
+    <ClInclude Include="..\include\physics\pcylinder.h" />
+    <ClInclude Include="..\include\physics\pfixedbox.h" />
+    <ClInclude Include="..\include\physics\pground.h" />
+    <ClInclude Include="..\include\physics\pobject.h" />
+    <ClInclude Include="..\include\physics\pray.h" />
+    <ClInclude Include="..\include\physics\pworld.h" />
+  </ItemGroup>
+
+  <!-- Headers that contain Q_OBJECT: run Qt moc -->
+  <ItemGroup>
+    <CustomBuild Include="..\include\mainwindow.h">
+      <FileType>Document</FileType>
+      <Message>Qt moc: %(Filename).h</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(MocExe)" "%(FullPath)" -o "$(GeneratedDir)moc_%(Filename).cpp" -I"$(MSBuildThisFileDirectory)..\include" -I"$(MSBuildThisFileDirectory)..\include\net" -I"$(MSBuildThisFileDirectory)..\include\physics" -I"$(VcpkgInstalled)\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC</Command>
+      <Outputs>$(GeneratedDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\include\glwidget.h">
+      <FileType>Document</FileType>
+      <Message>Qt moc: %(Filename).h</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(MocExe)" "%(FullPath)" -o "$(GeneratedDir)moc_%(Filename).cpp" -I"$(MSBuildThisFileDirectory)..\include" -I"$(MSBuildThisFileDirectory)..\include\net" -I"$(MSBuildThisFileDirectory)..\include\physics" -I"$(VcpkgInstalled)\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC</Command>
+      <Outputs>$(GeneratedDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\include\configwidget.h">
+      <FileType>Document</FileType>
+      <Message>Qt moc: %(Filename).h</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(MocExe)" "%(FullPath)" -o "$(GeneratedDir)moc_%(Filename).cpp" -I"$(MSBuildThisFileDirectory)..\include" -I"$(MSBuildThisFileDirectory)..\include\net" -I"$(MSBuildThisFileDirectory)..\include\physics" -I"$(VarTypesRoot)\include" -I"$(VcpkgInstalled)\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC</Command>
+      <Outputs>$(GeneratedDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\include\statuswidget.h">
+      <FileType>Document</FileType>
+      <Message>Qt moc: %(Filename).h</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(MocExe)" "%(FullPath)" -o "$(GeneratedDir)moc_%(Filename).cpp" -I"$(MSBuildThisFileDirectory)..\include" -I"$(MSBuildThisFileDirectory)..\include\net" -I"$(MSBuildThisFileDirectory)..\include\physics" -I"$(VcpkgInstalled)\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC</Command>
+      <Outputs>$(GeneratedDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\include\robotwidget.h">
+      <FileType>Document</FileType>
+      <Message>Qt moc: %(Filename).h</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(MocExe)" "%(FullPath)" -o "$(GeneratedDir)moc_%(Filename).cpp" -I"$(MSBuildThisFileDirectory)..\include" -I"$(MSBuildThisFileDirectory)..\include\net" -I"$(MSBuildThisFileDirectory)..\include\physics" -I"$(VcpkgInstalled)\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC</Command>
+      <Outputs>$(GeneratedDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\include\getpositionwidget.h">
+      <FileType>Document</FileType>
+      <Message>Qt moc: %(Filename).h</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(MocExe)" "%(FullPath)" -o "$(GeneratedDir)moc_%(Filename).cpp" -I"$(MSBuildThisFileDirectory)..\include" -I"$(MSBuildThisFileDirectory)..\include\net" -I"$(MSBuildThisFileDirectory)..\include\physics" -I"$(VcpkgInstalled)\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC</Command>
+      <Outputs>$(GeneratedDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\include\sslworld.h">
+      <FileType>Document</FileType>
+      <Message>Qt moc: %(Filename).h</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(MocExe)" "%(FullPath)" -o "$(GeneratedDir)moc_%(Filename).cpp" -I"$(MSBuildThisFileDirectory)..\include" -I"$(MSBuildThisFileDirectory)..\include\net" -I"$(MSBuildThisFileDirectory)..\include\physics" -I"$(VcpkgInstalled)\include\Qt5" -DHAVE_WINDOWS -DHAVE_MSVC</Command>
+      <Outputs>$(GeneratedDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+
+  <!-- Compile the moc-generated sources -->
+  <ItemGroup>
+    <ClCompile Include="$(GeneratedDir)moc_mainwindow.cpp" />
+    <ClCompile Include="$(GeneratedDir)moc_glwidget.cpp" />
+    <ClCompile Include="$(GeneratedDir)moc_configwidget.cpp" />
+    <ClCompile Include="$(GeneratedDir)moc_statuswidget.cpp" />
+    <ClCompile Include="$(GeneratedDir)moc_robotwidget.cpp" />
+    <ClCompile Include="$(GeneratedDir)moc_getpositionwidget.cpp" />
+    <ClCompile Include="$(GeneratedDir)moc_sslworld.cpp" />
+  </ItemGroup>
+
+  <!-- ================================================================ -->
+  <!--  Qt resource (.qrc) -> rcc                                       -->
+  <!-- ================================================================ -->
+  <ItemGroup>
+    <CustomBuild Include="..\resources\textures.qrc">
+      <FileType>Document</FileType>
+      <Message>Qt rcc: %(Filename).qrc</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(RccExe)" -name %(Filename) "%(FullPath)" -o "$(GeneratedDir)qrc_%(Filename).cpp"</Command>
+      <Outputs>$(GeneratedDir)qrc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(GeneratedDir)qrc_textures.cpp" />
+  </ItemGroup>
+
+  <!-- ================================================================ -->
+  <!--  Protobuf: .proto -> .pb.cc / .pb.h                              -->
+  <!-- ================================================================ -->
+  <ItemGroup>
+    <CustomBuild Include="..\src\proto\grSim_Commands.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\grSim_Packet.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\grSim_Replacement.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\grSim_Robotstatus.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_gc_common.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_simulation_config.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_simulation_control.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_simulation_error.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_simulation_robot_control.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_simulation_robot_feedback.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_simulation_synchronous.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_vision_detection.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_vision_geometry.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\src\proto\ssl_vision_wrapper.proto">
+      <FileType>Document</FileType>
+      <Message>protoc: %(Filename).proto</Message>
+      <Command>if not exist "$(GeneratedDir)" mkdir "$(GeneratedDir)"
+"$(ProtocExe)" --cpp_out="$(GeneratedDir)." --proto_path="%(RootDir)%(Directory)." "%(FullPath)"</Command>
+      <Outputs>$(GeneratedDir)%(Filename).pb.cc;$(GeneratedDir)%(Filename).pb.h;%(Outputs)</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+
+  <!-- Compile the protoc-generated sources -->
+  <ItemGroup>
+    <ClCompile Include="$(GeneratedDir)grSim_Commands.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)grSim_Packet.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)grSim_Replacement.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)grSim_Robotstatus.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_gc_common.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_simulation_config.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_simulation_control.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_simulation_error.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_simulation_robot_control.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_simulation_robot_feedback.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_simulation_synchronous.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_vision_detection.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_vision_geometry.pb.cc" />
+    <ClCompile Include="$(GeneratedDir)ssl_vision_wrapper.pb.cc" />
+  </ItemGroup>
+
+  <!-- ================================================================ -->
+  <!--  Windows resource (icon)                                          -->
+  <!-- ================================================================ -->
+  <ItemGroup>
+    <ResourceCompile Include="..\resources\grsim.rc" />
+  </ItemGroup>
+
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+
+  <!-- ================================================================ -->
+  <!--  Post-build: copy runtime DLLs next to grSim.exe                 -->
+  <!-- ================================================================ -->
+  <Target Name="DeployRuntimeDlls" AfterTargets="Link">
+    <PropertyGroup>
+      <_DllSrc Condition="'$(Configuration)'=='Release'">$(VcpkgInstalled)\bin</_DllSrc>
+      <_DllSrc Condition="'$(Configuration)'=='Debug'">$(VcpkgInstalled)\debug\bin</_DllSrc>
+    </PropertyGroup>
+    <ItemGroup>
+      <_Dlls Include="$(_DllSrc)\*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_Dlls)"
+          DestinationFolder="$(OutDir)"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(_DllSrc)')" />
+    <!-- Qt5 platform plugin (windows) is required at runtime -->
+    <ItemGroup>
+      <_QtPlatform Include="$(VcpkgInstalled)\plugins\platforms\qwindows*.dll" Condition="'$(Configuration)'=='Release'" />
+      <_QtPlatform Include="$(VcpkgInstalled)\debug\plugins\platforms\qwindowsd*.dll" Condition="'$(Configuration)'=='Debug'" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutDir)plugins\platforms" />
+    <Copy SourceFiles="@(_QtPlatform)"
+          DestinationFolder="$(OutDir)plugins\platforms"
+          SkipUnchangedFiles="true" />
+    <WriteLinesToFile
+      File="$(OutDir)qt.conf"
+      Lines="[Paths]&#x0D;&#x0A;Plugins = plugins"
+      Overwrite="true" />
+  </Target>
+
+</Project>
